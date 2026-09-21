@@ -56,10 +56,10 @@ void create_inventory() {
     }
     
     // TODO: Free the allocated memory for item_ids
-    
+    free(item_ids);
     
     // TODO: Free the allocated memory for quantities
-    
+    free(quantities);
     
     printf("Memory freed successfully.\n");
 }
@@ -79,19 +79,25 @@ void expand_inventory() {
     int *quantities = NULL;
     
     // TODO: Allocate memory for item_ids array (3 integers)
-    
+    item_ids = (int*)malloc(initial_size * sizeof(int));
     
     // TODO: Check if malloc succeeded
     // If allocation failed, print "Failed to allocate item_ids" and return
-    
+    if (item_ids == NULL) {
+        printf("Failed to allocate item_ids\n");
+        return;
+    }
     
     
     // TODO: Allocate memory for quantities array (3 integers)
-    
+    quantities = (int*)malloc(initial_size * sizeof(int));
     
     // TODO: Check if malloc succeeded for quantities
     // If allocation failed, print "Failed to allocate quantities" and return
-    
+    if (quantities == NULL) {
+        printf("Failed to allocate quantities\n");
+        return;
+    }
     
     
     // Fill initial inventory
@@ -107,15 +113,22 @@ void expand_inventory() {
     // TODO: Use realloc to expand item_ids from 3 to 6 integers
     // Store the result back in item_ids    
     
+    item_ids = (int*)realloc(item_ids, expanded_size * sizeof(int));
     // TODO: Check if realloc succeeded
-    
+    if (item_ids == NULL) {
+        printf("Failed to expand item_ids\n");
+        return;
+    }
     
     
     // TODO: Use realloc to expand quantities from 3 to 6 integers
-    
+    quantities = (int*)realloc(quantities, expanded_size * sizeof(int));
     
     // TODO: Check if realloc succeeded
-    
+    if (quantities == NULL) {
+        printf("Failed to exapand quantities\n");
+        return;
+    }
     
     
     // Add new items to expanded inventory
@@ -131,10 +144,10 @@ void expand_inventory() {
     }
     
     // TODO: Free the allocated memory for item_ids
-    
+    free(item_ids);
     
     // TODO: Free the allocated memory for quantities
-    
+    free(quantities);
     
     printf("Memory freed successfully.\n");
 }
@@ -193,7 +206,7 @@ void memory_leak_fixed() {
         temp_item[0] = 300 + i;
         
         // TODO: Free the memory to prevent the leak
-        
+    
         
     }
     
