@@ -1,0 +1,63 @@
+Memory Management Reflection
+
+Memory Leak Observations
+A memory leak happened in the memory_leak_demo() function 
+beacuase memory was allocated with malloc() but was never
+released with free(). The specific line that caused the
+allocation was int *temp_item = (int*)malloc(1000 * sizeof(int));.
+This code runs inside a loop that repeats 1,000 times. Each time
+the loop runs, another 1,000 integers are allocated, but the memory
+is not returned. This means the program continues using more
+memory even thoigh it is no longer using the old data. If this
+happened for days, the program could eventually use a very large
+amount of available memory. This could slow down the server or
+even cause the program to crash.
+The fixed version solves the problem by adding free(temp_item);
+after the memory is used. This tells the computer that the memory
+is no longer needed an can be used again. It will no longer keep
+all 1,000 allocations in memory, each allocation is released before
+the next iteration. It shows why it is important to pair memory
+allocation with memory deallocation when working with C. 
+
+Python vs C Memory Management
+Python handles many memory managment tasks automatically that I
+had to perform manually in C. In C, I had to use malloc() to 
+allocate enough memory for my inventory arrays. I also had to calculate
+how much memory was needed using sizeof(int). When I wanted to
+make the inventory larger, I had to use realloc() to allocate 
+enough memory for my inventory arrays. I also had to calculate 
+how much memory was needed using sizeof(int). When I wanted to
+make the inventory alrger, I had to use realloc() to request a 
+larger block of memory. I also had to check whether malloc()
+and realloc() returned NULL to make sure the allocation was
+successful. Lastly, I had to use free() when I was finished with
+the memory. In Python, I can simply create inventory = [] and use
+append() without manually allocating or freeing the memory.
+According to Resource 3, Python uses automatic memory Management
+and garbage collect behind the scenes. When objects are created,
+Python kepps track of them and their references. When an onject
+is no longer being used or referneced, Python can identify thatt
+the memory associated with the object is no longer needed. Python
+uses reference counting as an important part of this process,
+along with a garbage collector that can find reference cycles.
+The garbage collector then helps reclaim memory that is no longer 
+reachable. This means the programmer does not normally have to 
+manually call something like C's free() everytime an object discarded.
+
+Garbage Collection Trade-offs
+Python's garbage collection makes programming easier, but it has
+costs. The garbage collector has to use CPU cycles to check
+objects and determine which memory can be reclaimed. It also
+requires memory and other resources to keep track of objects and
+their references. These processes can add overhead compared
+with manually managing memory in C.
+A systems programmer working on an operating system or embedded 
+device might choose C because manual memory managment provides 
+more direct control over memoru and system resources. An operating
+system or small embedded device may have limited memory and strict
+performance requirements. C allows programmers to decide exactly when
+memory is allocated and released instead of depending on a garbage
+collector to decide when cleanup happens. The trade-off is that 
+the programmer must be careful because mistakes such as memory 
+leaks, dangling pointers, and invalid meory access can cause serious
+problems.
