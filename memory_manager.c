@@ -206,7 +206,7 @@ void memory_leak_fixed() {
         temp_item[0] = 300 + i;
         
         // TODO: Free the memory to prevent the leak
-    
+        free(temp_item);
         
     }
     
@@ -241,12 +241,16 @@ void safe_pointer_handling() {
     
     // TODO: Set player_health to NULL after freeing to avoid dangling pointer
     // This prevents accidentally using the freed memory
-    
+    player_health = NULL;
     
     // TODO: Before using player_health, check if it's NULL
     // If it's not NULL, print the value. If it is NULL, print "Health data not available"
     // Hint: Use an if statement to check: if (player_health != NULL)
-    
+    if (player_health != NULL) {
+        printf("player health: %d\n", *player_health);
+    } else {
+        printf("Health data not available\n");
+    }
     
     
     
